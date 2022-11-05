@@ -1,1 +1,2 @@
-# CSC-299-Text-Processing-Project
+# depaul-csc299-search
+Search project for DePaul CSC 299
