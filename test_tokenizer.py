@@ -1,9 +1,11 @@
 from unittest import TestCase
 
-from tokenizer import NaiveTokenizer
+import tokenizer
+from tokenizer import NaiveTokenizer, GroupOneTokenizer
 
 
 class TokenizerTest(TestCase):
+
     def __init__(self):
         super().__init__()
         self.tokenizer = NaiveTokenizer()
@@ -15,7 +17,8 @@ class TokenizerTest(TestCase):
         self.assertEqual(self.tokenizer.tokenize('For now, we are here'), ['for', 'now', ',', 'we', 'are', 'here'])
 
     def test_tokenize__period(self):
-        self.assertEqual(self.tokenizer.tokenize('For now, we are here.'), ['for', 'now', ',', 'we', 'are', 'here', '.'])
+        self.assertEqual(self.tokenizer.tokenize('For now, we are here.'),
+                         ['for', 'now', ',', 'we', 'are', 'here', '.'])
 
     def test_tokenize__other_non_word_chars(self):
         self.assertEqual(self.tokenizer.tokenize('10% of $5 is 50 c'), ['10', '%', 'of', '$', '5', 'is', '50', 'c'])
@@ -26,3 +29,4 @@ class TokenizerTest(TestCase):
 
     def test_tokenize__ellipsis(self):
         self.assertEqual(self.tokenizer.tokenize('More...'), ['more', '...'])
+
