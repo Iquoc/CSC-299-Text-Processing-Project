@@ -29,4 +29,11 @@ class TokenizerTest(TestCase):
 
     def test_tokenize__ellipsis(self):
         self.assertEqual(self.tokenizer.tokenize('More...'), ['more', '...'])
+    
+    def test_tokenize__main(self):
+        self.assertEqual(self.tokenizer.tokenize('Patients with positive M. pneumoniae cultures from respiratory specimens from January 1997 through December 1998',
+                        ["patients", "with", "positive", "m.", "pneumoniae", "cultures", "from", "respiratory", "specimens", "from", "january", "1997", "through", "december", "1998"]))
+    def test_tokenize__pun(self):
+        self.assertEqual(self.tokenizer.tokenize("pre-school children (22.5%). It occurred year-round",
+                        ["pre-school", "children", "(", "22.5", "%", ")", ".", "it", "occurred", "year-round"]))
 
