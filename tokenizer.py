@@ -76,8 +76,7 @@ class GroupOneTokenizer(Tokenizer):
         adjusted = text
         adjusted = re.sub(r'(w)\.\s([A-Z])', r'\1 \. \2', adjusted)
         return adjusted.split()
-        
-      class StemAndLem(Tokenizer):
+       
 
     def stemm(self, tokenized: List[str]) -> List[str]:
         stem = PorterStemmer()
