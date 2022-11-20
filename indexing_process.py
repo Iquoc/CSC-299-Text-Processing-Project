@@ -53,6 +53,8 @@ def create_tf_idf_indexing_process(index_filename: str) -> DefaultIndexingProces
 
 
 def run_covid_trec_indexing_process(input_filename: str, output_filename: str):
-    ip = create_tf_idf_indexing_process(output_filename)
-    index = ip.run(source=document_source.TrecCovidJsonlSource(input_filename))
+    ip = create_tf_idf_indexing_process(r"C:\Users\iquoc\OneDrive - DePaul University\Documents\DePaul University 2022-23\2022-23 Q1 Autumn\CSC 299\Final Project Git\text processing" + '\\' + output_filename)
+    index = ip.run(source=document_source.TrecCovidJsonlSource(r'C:\Users\iquoc\OneDrive - DePaul University\Documents\DePaul University 2022-23\2022-23 Q1 Autumn\CSC 299\Final Project Git\text processing' + '\\' + input_filename))
     index.write()
+
+# C:\Users\iquoc\OneDrive - DePaul University\Documents\DePaul University 2022-23\2022-23 Q1 Autumn\CSC 299\Final Project Git\text processing

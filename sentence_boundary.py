@@ -6,7 +6,7 @@ text = "Hello, my name is David. I like to have fun. Okay bye!"
 text2 = "The decimal 0.61 stands for 61 hundredths. The recurring decimal 3.999... is also described as 3.9 recurring."
 
 
-def sentence_boundary(tokens: str) -> List[str]:
+def sentence_boundary(tokens: str) -> List[str]:    # David A.
     """
     :param tokens: a string of tokens
     :return: returns a list of tokens that have been split by new sentence
