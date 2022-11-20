@@ -51,6 +51,15 @@ class GroupOneTokenizer(Tokenizer):
         print(result)
         return result.split()
 
+    def sentence_boundary(self, text: str) -> List[str]:
+        adjusted = text
+        # Split sentences
+        #       Look for a period, space, and capital letter
+        #       Split after
+        adjusted = re.split(r'(?<=\.)\s+(?=[A-Z"\'])', adjusted) # This keeps the period and whitespace
+        # adjusted = re.split(r'\.\s+(?=[A-Z"\'])', adjusted) -- This removes the period and whitespace
+        return adjusted
+
     def tokenize_common_titles(self, text: str) -> str:
         adjusted = text.lower()
         for title in self.titles:
