@@ -36,4 +36,11 @@ class TokenizerTest(TestCase):
     def test_tokenize__pun(self):
         self.assertEqual(self.tokenizer.tokenize("pre-school children (22.5%). It occurred year-round",
                         ["pre-school", "children", "(", "22.5", "%", ")", ".", "it", "occurred", "year-round"]))
+        
+    def test_tokenize__stemming(self):
+        tokens = ['Males', 'Modes', 'Playing', 'Cats', 'Several']
+        self.assertEqual(self.tokenizer.stemm(tokens), ['male', 'mode', 'play', 'cat', 'sever'])
 
+    def test_tokenize__lemmatization(self):
+        tokens = ['cities', 'Mice', 'Playing', 'Languages', 'Cities']
+        self.assertEqual(self.tokenizer.lemm(tokens), ['city', 'mouse', 'play', 'language', 'city'])
