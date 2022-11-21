@@ -113,16 +113,16 @@ class GroupOneTokenizer(Tokenizer):     # Iquoc T.
         url_tokenized = re.sub(r'(https:\/\/www\.|http:\/\/www\.|www\.)[a-zA-Z0-9\-_$]+\.[a-zA-Z]{2,5}$', r'', text)
         return url_tokenized.split()
 
-    def stemm(self, tokenized: List[str]) -> List[str]:     # Carlos Q.
+    def stemm(self, tokenized: List[str]) -> List[str]:
         stem = PorterStemmer()
-        stemmed = list()
-        for word, i in tokenized:
-            stemmed[i] = stem.stem(word)
+        stemmed = []
+        for word in tokenized:
+            stemmed.append(stem.stem(word))
         return stemmed
 
     def lemm(self, tokenized: List[str]) -> List[str]:
         lem = WordNetLemmatizer()
-        lemmed = list()
-        for word, i in tokenized:
-            lemmed[i] = lem.lemmatize(word)
+        lemmed = []
+        for word in tokenized:
+            lemmed.append(lem.lemmatize(word))
         return lemmed
