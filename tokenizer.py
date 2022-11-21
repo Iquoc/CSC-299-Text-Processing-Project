@@ -1,5 +1,6 @@
 import abc
 import re
+import nltk
 from abc import ABC
 from typing import List
 from nltk.stem import PorterStemmer
@@ -97,7 +98,7 @@ class GroupOneTokenizer(Tokenizer):     # Iquoc T.
         #       Look for a period, space, and capital letter
         #       Split after
         # adjusted = re.split(r'(?<=\.)\s+(?=[A-Z"\'])', adjusted)    # This keeps the period and whitespace
-        adjusted = re.sub(r'([.?!\'\"])\s+([A-Z\'\"?]\w+)', r' \1 \2', adjusted)
+        adjusted = re.sub(r'([.?!])\s+([A-Z?]\w+)', r' \1 \2', adjusted)
         adjusted = re.sub(r'(\.)$', r' \1 ', adjusted)
         # ^^^ Does not split, adds space before and after period
         # adjusted = re.split(r'\.\s+(?=[A-Z"\'])', adjusted) -- This removes the period and whitespace
@@ -124,5 +125,6 @@ class GroupOneTokenizer(Tokenizer):     # Iquoc T.
         lem = WordNetLemmatizer()
         lemmed = []
         for word in tokenized:
-            lemmed.append(lem.lemmatize(word))
+            lemmed.append(lem.lemmatize(word.lower()))
+        print(lemmed)
         return lemmed

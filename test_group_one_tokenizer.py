@@ -64,10 +64,10 @@ class GroupOneTokenizerTest(TestCase):
         print(c)
         self.assertEqual(['videos', 'here', 'at', 'www.youtube.com/', 'hello', 'hello'], c)
 
-     def test_tokenize__stemming(self):      # Carlos Q.
-         tokens = ['Males', 'Modes', 'Playing', 'Cats', 'Several']
-         self.assertEqual(self.tokenizer.stemm(tokens), ['male', 'mode', 'play', 'cat', 'sever'])
+    def test_tokenize__stemming(self):      # Carlos Q.
+        tokens = ['Males', 'Modes', 'Playing', 'Cats', 'Several']
+        self.assertEqual(['male', 'mode', 'play', 'cat', 'sever'], self.tokenizer.stemm(tokens))
     
-     def test_tokenize__lemmatization(self):     # Carlos Q.
-         tokens = ['cities', 'Mice', 'Playing', 'Languages', 'Cities']
-         self.assertEqual(self.tokenizer.lemm(tokens), ['city', 'mouse', 'play', 'language', 'city'])
+    def test_tokenize__lemmatization(self):     # Carlos Q.
+        tokens = ['cities', 'Mice', 'Playing', 'Languages', 'Cities']
+        self.assertEqual(['city', 'mouse', 'play', 'language', 'city'], self.tokenizer.lemm(tokens))
