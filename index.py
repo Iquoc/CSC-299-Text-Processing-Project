@@ -79,6 +79,49 @@ class NaiveIndexer(Indexer):
         return NaiveIndex(self.index_filename)
 
 
+class TextProcessIndex(Index):
+    def __init__(self, filename: str):
+        self.filename = filename
+        self.docs = []
+
+    def add_document(self, doc: TransformedDocument) -> None:
+        self.docs.append(doc)
+
+    def search(self, query: Query) -> SearchResults:
+        query_terms = set(query.terms)
+        matching_doc_ids = []
+        for doc in self.docs:
+            if query_terms.issubset(doc.tokens):
+                matching_doc_ids.append(doc.doc_id)
+            if len(matching_doc_ids) == query.num_results:
+                break
+        return SearchResults(result_doc_ids=matching_doc_ids)
+
+    def read(self):
+        with open(self.filename) as fp:
+            records = json.load(fp)
+        # records = [{'doc_id': "12", 'tokens': ['a', 'b']}, {'doc_id': "13", 'tokens': ['c', 'd']}]
+        # self.docs = []
+        # for record in records:
+        #     self.docs.append(TransformedDocument(doc_id=record['doc_id'], tokens=record['tokens']))
+        self.docs = [TransformedDocument(doc_id=record['doc_id'], tokens=record['tokens'])
+                     for record in records]
+
+    def write(self):
+        with open(self.filename, 'w') as fp:
+            for doc in self.docs:
+                json.dump({'doc_id': doc.doc_id, 'tokens': doc.tokens}, fp, indent=2)
+            # json.dump([{'doc_id': doc.doc_id, 'tokens': doc.tokens} for doc in self.docs], fp)
+
+
+class TextProcessIndexer(Indexer):
+    def __init__(self, index_filename):
+        self.index_filename = index_filename
+
+    def create_index(self) -> Index:
+        return TextProcessIndex(self.index_filename)
+
+
 def term_frequency(term_count, document_length):
     return term_count / document_length
 

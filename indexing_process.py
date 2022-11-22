@@ -1,8 +1,8 @@
 import document_source
 from document_source import DocumentSource, WikiJsonDocumentSource
 from document_transformer import DocumentTransformer, NaiveSearchDocumentTransformer
-from index import Index, Indexer, NaiveIndexer, SingleIndexIndexer, ListBasedInvertedIndexWithFrequencies
-from tokenizer import NaiveTokenizer
+from index import Index, Indexer, NaiveIndexer, SingleIndexIndexer, ListBasedInvertedIndexWithFrequencies, TextProcessIndexer
+from tokenizer import NaiveTokenizer, GroupOneTokenizer
 
 
 class DefaultIndexingProcess:
@@ -54,6 +54,18 @@ def create_tf_idf_indexing_process(index_filename: str) -> DefaultIndexingProces
 
 def run_covid_trec_indexing_process(input_filename: str, output_filename: str):
     ip = create_tf_idf_indexing_process(r"C:\Users\iquoc\OneDrive - DePaul University\Documents\DePaul University 2022-23\2022-23 Q1 Autumn\CSC 299\Final Project Git\text processing" + '\\' + output_filename)
+    index = ip.run(source=document_source.TrecCovidJsonlSource(r'C:\Users\iquoc\OneDrive - DePaul University\Documents\DePaul University 2022-23\2022-23 Q1 Autumn\CSC 299\Final Project Git\text processing' + '\\' + input_filename))
+    index.write()
+
+
+def create_text_process_indexing_process(index_filename: str) -> DefaultIndexingProcess:
+    return DefaultIndexingProcess(
+        document_transformer=NaiveSearchDocumentTransformer(tokenizer=GroupOneTokenizer()),
+        indexer=TextProcessIndexer(index_filename))
+
+
+def run_text_process_indexing_process(input_filename: str, output_filename: str):
+    ip = create_text_process_indexing_process(r"C:\Users\iquoc\OneDrive - DePaul University\Documents\DePaul University 2022-23\2022-23 Q1 Autumn\CSC 299\Final Project Git\text processing" + '\\' + output_filename)
     index = ip.run(source=document_source.TrecCovidJsonlSource(r'C:\Users\iquoc\OneDrive - DePaul University\Documents\DePaul University 2022-23\2022-23 Q1 Autumn\CSC 299\Final Project Git\text processing' + '\\' + input_filename))
     index.write()
 

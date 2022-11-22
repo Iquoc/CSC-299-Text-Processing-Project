@@ -46,7 +46,7 @@ class GroupOneTokenizer(Tokenizer):     # Iquoc T.
     # (). Word1
     # Quotations, mis-capitalized words?, pre-school?,...
 
-    def tokenize(self, text: str) -> List[str]:
+    def tokenize(self, text: str) -> List[str]:     # Iquoc T.
         adjusted = text     # default variable to be modified, for organization
         common_titles = self.tokenize_common_titles(adjusted)       # removes . whenever preceded by title
         remove_non_word = self.tokenize_non_word(common_titles)         # takes any non character and adds whitespace before and after
@@ -54,18 +54,18 @@ class GroupOneTokenizer(Tokenizer):     # Iquoc T.
         for title in self.titles:   # iterates through a list of titles
             end_of_sentence = re.sub(rf'{title}', rf'{title}.', end_of_sentence)        # adds back the . to the titles without interruption from sentence boundary
         apostrophe = re.sub(r'(\w) \' (\w)', r"\1'\2", end_of_sentence)     # adds whitespace before and after '
-        print("apostrophe: " + apostrophe)
+        # print("apostrophe: " + apostrophe)
         with_ellipses = re.sub(r'\.(\s+)?\.(\s+?)\.', ' ... ', apostrophe)      # re-combines consecutive (.)
         lower_case = with_ellipses.lower()      # takes all the characters and makes them lowercase
         result = lower_case
-        print(result)
+        # print(result)
         return result.split()
 
-    def tokenize_non_word(self, text: str) -> str:
+    def tokenize_non_word(self, text: str) -> str:      # Iquoc T.
         adjusted = text
         adjusted = re.sub(r'(\W)', r' \1 ', adjusted)
         adjusted = re.sub(r'(\s)([\.\-])(\s)', r'\2', adjusted)
-        print("non word: " + adjusted)
+        # print("non word: " + adjusted)
         return adjusted
 
     def tokenize_correct_errors(self):      # possibly for correcting spelling errors and the sort...
@@ -86,7 +86,7 @@ class GroupOneTokenizer(Tokenizer):     # Iquoc T.
     def tokenize_lower_case(self, text: str) -> str:        # dead function
         adjusted = text
         adjusted = re.sub(r'([A-Z])\1', self.toLowercase, adjusted)
-        print(adjusted)
+        # print(adjusted)
         return adjusted
 
     def toLowercase(self, match):       # dead function
@@ -114,17 +114,17 @@ class GroupOneTokenizer(Tokenizer):     # Iquoc T.
         url_tokenized = re.sub(r'(https:\/\/www\.|http:\/\/www\.|www\.)[a-zA-Z0-9\-_$]+\.[a-zA-Z]{2,5}$', r'', text)
         return url_tokenized.split()
 
-    def stemm(self, tokenized: List[str]) -> List[str]:
+    def stemm(self, tokenized: List[str]) -> List[str]:     # Carlos Q.
         stem = PorterStemmer()
         stemmed = []
         for word in tokenized:
             stemmed.append(stem.stem(word))
         return stemmed
 
-    def lemm(self, tokenized: List[str]) -> List[str]:
+    def lemm(self, tokenized: List[str]) -> List[str]:      # Carlos Q.
         lem = WordNetLemmatizer()
         lemmed = []
         for word in tokenized:
             lemmed.append(lem.lemmatize(word.lower()))
-        print(lemmed)
+        # print(lemmed)
         return lemmed
